@@ -1,5 +1,8 @@
 package P3LongestSubstringWRC;
 
+import java.util.HashMap;
+import java.util.Map;
+
 class Solution {
     public int lengthOfLongestSubstring(String s) {
         Map<Character, Integer> charIndex = new HashMap<>();
