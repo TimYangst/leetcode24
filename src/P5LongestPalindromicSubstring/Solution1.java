@@ -1,6 +1,6 @@
 package P5LongestPalindromicSubstring;
 
-class Solution {
+class Solution1 {
     public String longestPalindrome(String s) {
         if (s.isEmpty() || s.length() == 1)
             return s;
