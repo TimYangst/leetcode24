@@ -1,4 +1,4 @@
-package P4;
+package P4MedianOfTwoSortedArrays;
 
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
