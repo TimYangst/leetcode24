@@ -1,4 +1,4 @@
-package P6;
+package P6ZigzagConversion;
 
 public class Solution {
 
