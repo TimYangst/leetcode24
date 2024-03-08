@@ -14,11 +14,15 @@ class Solution {
                 int j = i - 1;
                 int k = 1;
                 while (k >= 1 && j >= 0) {
-                    if (s.charAt(j) == '(')
-                        k--;
-                    else
-                        k++;
-                    j--;
+                    if (f[j] > 0)
+                        j = j - f[j];
+                    else {
+                        if (s.charAt(j) == '(')
+                            k--;
+                        else
+                            k++;
+                        j--;
+                    }
                 }
                 if (k == 0) {
                     if (j < 0) {
