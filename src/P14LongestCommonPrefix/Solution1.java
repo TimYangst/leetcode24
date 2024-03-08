@@ -1,6 +1,6 @@
 package P14LongestCommonPrefix;
 
-class Solution {
+class Solution1 {
     public String longestCommonPrefix(String[] strs) {
         if (strs.length == 0)
             return "";

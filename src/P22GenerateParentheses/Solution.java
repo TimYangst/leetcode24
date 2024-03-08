@@ -1,5 +1,10 @@
 package P22GenerateParentheses;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> result = new ArrayList<>();

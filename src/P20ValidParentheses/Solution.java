@@ -1,5 +1,7 @@
 package P20ValidParentheses;
 
+import java.util.Stack;
+
 class Solution {
     public boolean isValid(String s) {
         if (s.length() % 2 == 1)

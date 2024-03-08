@@ -1,6 +1,6 @@
-package P11;
+package P11ContainerWithMostWater;
 
-class Solution {
+class SolutionWrong {
     class BinaryTree {
         int maxValue;
         int[] data;
@@ -106,7 +106,7 @@ class Solution {
     }
 
     public static void main(String[] args) {
-        Solution solution = new Solution();
+        SolutionWrong solution = new SolutionWrong();
         System.out.println(solution.maxArea(new int[] { 1, 8, 6, 2, 5, 4, 8, 3, 7 }));
     }
 }
