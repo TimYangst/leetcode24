@@ -1,4 +1,4 @@
-package P34;
+package P34FindFirstandLastPosition;
 
 class Solution {
     public int[] searchRange(int[] nums, int target) {

@@ -3,7 +3,7 @@ package P36VaildSudoku;
 import java.util.HashSet;
 import java.util.Set;
 
-class Solution {
+class Solution1 {
     public boolean isValidSudoku(char[][] board) {
         if (board.length < 9)
             return false;
