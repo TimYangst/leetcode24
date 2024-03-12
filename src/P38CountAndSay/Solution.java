@@ -10,7 +10,6 @@ class Solution {
             int j = 0;
             while (j < current.length()) {
                 int count = 1;
-                char c = current.charAt(j);
                 while (j + 1 < current.length() && current.charAt(j + 1) == current.charAt(j)) {
                     j++;
                     count++;
