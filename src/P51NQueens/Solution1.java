@@ -82,9 +82,4 @@ class Solution1 {
             result.add(mirror);
         }
     }
-
-    public static void main(String[] args) {
-        Solution solution1 = new Solution();
-        solution1.solveNQueens(5);
-    }
 }
