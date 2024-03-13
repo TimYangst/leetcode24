@@ -1,4 +1,4 @@
-package P47;
+package P47PermutationsII;
 
 import java.util.Arrays;
 import java.util.List;
