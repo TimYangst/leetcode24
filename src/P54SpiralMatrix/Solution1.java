@@ -33,7 +33,6 @@ public class Solution1 {
             for (int i = lx - 1; i > 0; i--) {
                 result.add(matrix[x + i][y]);
             }
-
             x++;
             y++;
             lx -= 2;

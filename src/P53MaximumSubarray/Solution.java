@@ -1,4 +1,4 @@
-package P53;
+package P53MaximumSubarray;
 
 class Solution {
     public int maxSubArray(int[] nums) {

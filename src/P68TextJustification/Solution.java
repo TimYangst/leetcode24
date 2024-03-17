@@ -1,5 +1,8 @@
 package P68TextJustification;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class Solution {
     public List<String> fullJustify(String[] words, int maxWidth) {
         List<String> result = new ArrayList<String>();

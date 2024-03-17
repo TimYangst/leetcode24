@@ -1,4 +1,4 @@
-package P56;
+package P56MergeIntervals;
 
 class Solution {
 

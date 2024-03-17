@@ -3,7 +3,7 @@ package P51NQueens;
 import java.util.ArrayList;
 import java.util.List;
 
-class Solution {
+class Solution1 {
     public List<List<String>> solveNQueens(int n) {
         char[][] board = new char[n][n];
         for (int i = 0; i < n; i++) {

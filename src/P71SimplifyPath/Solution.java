@@ -1,5 +1,8 @@
 package P71SimplifyPath;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class Solution {
     public String simplifyPath(String path) {
         if (path.length() == 0)

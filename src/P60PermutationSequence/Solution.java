@@ -1,5 +1,8 @@
 package P60PermutationSequence;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class Solution {
     public String getPermutation(int n, int k) {
         if (n == 0)

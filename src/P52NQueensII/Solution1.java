@@ -1,6 +1,6 @@
 package P52NQueensII;
 
-class Solution {
+class Solution1 {
     public int totalNQueens(int n) {
         if (n == 1) {
             return 1;
