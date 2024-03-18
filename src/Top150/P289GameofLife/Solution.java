@@ -10,7 +10,7 @@ class Solution {
         }
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
-                int count = countAndSet(board, i, j);
+                countAndSet(board, i, j);
             }
         }
         for (int i = 0; i < x; i++) {
@@ -30,7 +30,7 @@ class Solution {
         return x >= 0 && x < board.length && y >= 0 && y < board[0].length;
     }
 
-    int countAndSet(int[][] board, int x, int y) {
+    void countAndSet(int[][] board, int x, int y) {
         int result = 0;
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
@@ -40,7 +40,6 @@ class Solution {
             }
         }
         board[x][y] += (result << 1);
-        return result;
     }
 
     int getAndWipeCount(int[][] board, int x, int y) {
