@@ -5,28 +5,31 @@ class Solution {
         int i = 0;
         int j = 0;
         Map<Character, String> cMap = new HashMap<>();
-        Set<String> sSet = new HashSet<>();
+        Map<String, Character> sMap = new HashMap<>();
         while (i < pattern.length() && j < s.length()) {
             char c = pattern.charAt(i);
             i++;
+            while (j < s.length() && s.charAt(j) == ' ')
+                j++;
+            if (j == s.length())
+                return false;
             StringBuilder sb = new StringBuilder();
             while (j < s.length() && 'a' <= s.charAt(j) && 'z' >= s.charAt(j)) {
                 sb.append(s.charAt(j));
                 j++;
             }
-            j++;
             String current = sb.toString();
-            if (cMap.containsKey(c)) {
-                if (!cMap.get(c).equals(current))
+            if (cMap.containsKey(c) && sMap.containsKey(current)) {
+                if (!cMap.get(c).equals(current) || sMap.get(current) != c)
                     return false;
-            } else if (!cMap.containsKey(c)) {
-                if (sSet.contains(current))
-                    return false;
+            } else if (!cMap.containsKey(c) && !sMap.containsKey(current)) {
                 cMap.put(c, current);
-                sSet.add(current);
+                sMap.put(current, c);
+            } else {
+                return false;
             }
         }
-        if (i < pattern.length() || j < s.length())
+        if (i != pattern.length() || j != s.length())
             return false;
         return true;
     }
