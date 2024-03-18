@@ -1,5 +1,8 @@
 package Top150.P128LongestConsecutiveSequence;
 
+import java.util.HashMap;
+import java.util.Map;
+
 class Solution {
     public int longestConsecutive(int[] nums) {
         if (nums.length <= 1)
