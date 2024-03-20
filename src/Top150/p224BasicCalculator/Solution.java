@@ -8,85 +8,63 @@ class Solution {
         int l = s.length();
         boolean opPrevious = true;
         Stack<Character> opStack = new Stack<>();
-        Stack<Integer> value = new Stack<>();
-        Map<Character, Integer> opMapping = Map.of('+', 1, '-', 1, '*', 2, '/', 2, '(', 3, ')', 0, '$', 0);
+        Stack<Integer> valueStack = new Stack<>();
+        Map<Character, Integer> opMapping = Map.of('+', 0, '-', 0, '*', 1, '/', 1, '(', 2, ')', 3, '$', 4, 'r', 5);
+        int[][] opCompare = new int[][] {
+                { -1, -1, 1, 0, 1, 1 },
+                { 1, -1, 1, 0, 1, 1 },
+                { 1, 1, 1, 0, 1, 1 },
+                { -1, -1, 1, 0, 0, 0 },
+                { -1, -1, 0, 0, 1, 0 } };
 
-        while (i < l) {
-            char c = s.charAt(i);
+        char c;
+        opStack.push('$');
+        while (i <= l) {
+            if (i == l) {
+                c = '$';
+            } else
+                c = s.charAt(i);
             i++;
-            switch (c) {
-                case ' ':
-                    continue;
-                case '(':
-                    opStack.push(c);
-                    opPrevious = true;
-                    continue;
-                case ')': {
+            if (c == ' ')
+                continue;
+            else if ('0' <= c && c <= '9') {
+                opPrevious = false;
+                String number = extractNumber(s, i - 1);
+                i = i + number.length() - 1;
+                if (!opStack.isEmpty() && opStack.peek() == 'r') {
+                    opStack.pop();
+                    valueStack.push(-Integer.valueOf(number));
+                } else
+                    valueStack.push(Integer.valueOf(number));
+                continue;
+            } else if (c == '-' && opPrevious) {
+                opStack.push('r');
+                opPrevious = false;
+                continue;
+            } else {
+                int value1;
+                int value2;
+                while (opCompare[opMapping.get(c)][opMapping.get(opStack.peek())] < 0) {
+                    value2 = valueStack.pop();
+                    value1 = valueStack.pop();
+                    valueStack.push(evalute(opStack.pop(), value1, value2));
+                }
+                if (c == ')') {
                     opPrevious = false;
-                    char op = opStack.pop();
-                    int value2 = value.pop();
-                    int value1;
-                    while (op != '(') {
-                        value1 = value.pop();
-                        value2 = evalute(op, value1, value2);
-                        op = opStack.pop();
-                    }
-                    if (!opStack.isEmpty() && opStack.peek() == 'r') {
-                        value.push(-value2);
+                    opStack.pop();
+                    if (opStack.peek() == 'r') {
                         opStack.pop();
-                    } else {
-                        value.push(value2);
+                        value2 = valueStack.pop();
+                        valueStack.push(-value2);
                     }
                     continue;
-                }
-                case '-': {
-                    if (opPrevious) {
-                        opPrevious = false;
-                        c = s.charAt(i);
-                        while (c == ' ') {
-                            i++;
-                            c = s.charAt(i);
-                        }
-                        if ('0' <= c && c <= '9') {
-                            String number = extractNumber(s, i);
-                            value.push(-Integer.valueOf(number));
-                            i = i + number.length();
-                        } else {
-                            opStack.push('r');
-                        }
-                        continue;
-                    }
-                } // Pass through.
-                case '+':
-                case '*':
-                case '/': {
+                } else {
                     opPrevious = true;
-                    int value2 = value.pop();
-                    int value1;
-                    while (!opStack.isEmpty() && opMapping.get(opStack.peek()) <= 2
-                            && opMapping.get(c) <= opMapping.get(opStack.peek())) {
-                        value1 = value.pop();
-                        value2 = evalute(opStack.pop(), value1, value2);
-                    }
-                    value.push(value2);
                     opStack.push(c);
-                    continue;
-                }
-                default: {
-                    opPrevious = false;
-                    String number = extractNumber(s, i - 1);
-                    value.push(Integer.valueOf(number));
-                    i = i + number.length() - 1;
                 }
             }
         }
-        int value2 = value.pop();
-        int value1;
-        while (!opStack.isEmpty()) {
-            value1 = value.pop();
-            value2 = evalute(opStack.pop(), value1, value2);
-        }
-        return value2;
+        return valueStack.pop();
     }
 
     String extractNumber(String s, int b) {
