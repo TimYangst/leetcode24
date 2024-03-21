@@ -2,27 +2,29 @@ package Top150.P141LinkedListCycle;
 
 /**
  * Definition for singly-linked list.
+ * class ListNode {
+ * int val;
+ * ListNode next;
+ * ListNode(int x) {
+ * val = x;
+ * next = null;
+ * }
+ * }
  */
-class ListNode {
-    int val;
-    ListNode next;
-
-    ListNode(int x) {
-        val = x;
-        next = null;
-    }
-}
-
 public class Solution {
     public boolean hasCycle(ListNode head) {
-        if (head == null)
+        if (head == null || head.next == null)
             return false;
-        HashSet<ListNode> nodeSet = new HashSet<>();
-        while (head != null) {
-            if (nodeSet.contains(head))
+        ListNode oneStep = head.next;
+        ListNode twoStep = head.next.next;
+        while (twoStep != null) {
+            if (oneStep == twoStep) {
                 return true;
-            nodeSet.add(head);
-            head = head.next;
+            }
+            oneStep = oneStep.next;
+            if (twoStep.next == null)
+                return false;
+            twoStep = twoStep.next.next;
         }
         return false;
     }
