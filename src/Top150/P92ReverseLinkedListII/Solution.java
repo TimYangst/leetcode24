@@ -3,7 +3,7 @@ package Top150.P92ReverseLinkedListII;
 /**
  * Definition for singly-linked list.
  */
-public class ListNode {
+class ListNode {
     int val;
     ListNode next;
 
