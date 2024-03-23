@@ -1,5 +1,7 @@
 package Top150.P120Triangle;
 
+import java.util.List;
+
 class Solution {
     public int minimumTotal(List<List<Integer>> triangle) {
         int n = triangle.size();

@@ -1,5 +1,8 @@
 package Top150.P202HappyNumber;
 
+import java.util.HashSet;
+import java.util.Set;
+
 class Solution {
     public boolean isHappy(int n) {
         Set<Integer> exists = new HashSet<>();

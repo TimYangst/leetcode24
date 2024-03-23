@@ -1,5 +1,8 @@
 package Top150.P219ContainsDuplicateII;
 
+import java.util.HashMap;
+import java.util.Map;
+
 class Solution {
     public boolean containsNearbyDuplicate(int[] nums, int k) {
         if (nums.length <= 1)

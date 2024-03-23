@@ -3,7 +3,7 @@ package Top150.P82RemoveDuplicatesFromSortedListII;
 /**
  * Definition for singly-linked list.
  */
-public class ListNode {
+class ListNode {
     int val;
     ListNode next;
 

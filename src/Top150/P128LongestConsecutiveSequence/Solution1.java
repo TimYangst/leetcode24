@@ -3,7 +3,7 @@ package Top150.P128LongestConsecutiveSequence;
 import java.util.HashMap;
 import java.util.Map;
 
-class Solution {
+class Solution1 {
     public int longestConsecutive(int[] nums) {
         if (nums.length <= 1)
             return nums.length;

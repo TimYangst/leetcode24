@@ -1,5 +1,8 @@
 package Top150.P146LRUCache;
 
+import java.util.HashMap;
+import java.util.Map;
+
 class LRUCache {
 
     int capacity;

@@ -1,6 +1,9 @@
 package Top150.P290WordPattern;
 
-class Solution {
+import java.util.HashMap;
+import java.util.Map;
+
+class Solution1 {
     public boolean wordPattern(String pattern, String s) {
         int i = 0;
         int j = 0;

@@ -1,6 +1,6 @@
 package Top150.P135Candy;
 
-class Solution {
+class Solution1 {
     public int candy(int[] ratings) {
         if (ratings.length == 1)
             return 1;

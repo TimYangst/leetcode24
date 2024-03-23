@@ -1,6 +1,6 @@
 package Top150.P918MaximumSumCircularSubarray;
 
-class Solution {
+class Solution1 {
     public int maxSubarraySumCircular(int[] nums) {
         if (nums.length == 1)
             return nums[0];

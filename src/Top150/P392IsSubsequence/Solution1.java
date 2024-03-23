@@ -1,6 +1,6 @@
 package Top150.P392IsSubsequence;
 
-class Solution {
+class Solution1 {
     public boolean isSubsequence(String s, String t) {
         if (s.length() == 0)
             return true;

@@ -1,5 +1,8 @@
 package Top150.P138CopyListWithRandomPointer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 class Node {
     int val;
     Node next;
@@ -12,7 +15,7 @@ class Node {
     }
 }
 
-class Solution {
+class Solution1 {
     public Node copyRandomList(Node head) {
         if (head == null)
             return head;

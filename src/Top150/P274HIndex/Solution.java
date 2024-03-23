@@ -1,5 +1,7 @@
 package Top150.P274HIndex;
 
+import java.util.Arrays;
+
 class Solution {
     public int hIndex(int[] citations) {
         if (citations.length == 0)

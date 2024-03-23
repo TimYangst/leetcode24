@@ -1,4 +1,4 @@
-package Contest.P3;
+package Contest240316.P3;
 
 import java.util.Arrays;
 

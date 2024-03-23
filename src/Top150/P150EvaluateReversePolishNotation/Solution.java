@@ -1,8 +1,11 @@
 package Top150.P150EvaluateReversePolishNotation;
 
+import java.util.Set;
+import java.util.Stack;
+
 class Solution {
     public int evalRPN(String[] tokens) {
-        Stack<Integer> stack = new Stack();
+        Stack<Integer> stack = new Stack<>();
         Set<String> operates = Set.of("+", "-", "*", "/");
         int e1, e2;
         for (int i = 0; i < tokens.length; i++) {

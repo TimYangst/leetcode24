@@ -1,5 +1,7 @@
 package Top150.P141LinkedListCycle;
 
+import java.util.HashSet;
+
 /**
  * Definition for singly-linked list.
  */
@@ -13,7 +15,7 @@ class ListNode {
     }
 }
 
-public class Solution {
+public class Solution1 {
     public boolean hasCycle(ListNode head) {
         if (head == null)
             return false;
