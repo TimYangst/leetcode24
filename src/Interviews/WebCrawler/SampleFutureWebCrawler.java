@@ -11,11 +11,13 @@ public class SampleFutureWebCrawler {
     private final Set<String> visitedUrls = ConcurrentHashMap.newKeySet();
     private final int maxDepth;
     private final WebParser parser;
+    private final SimpleRateLimiter rateLimiter; 
 
     public SampleFutureWebCrawler(int maxDepth, int threadPoolSize, WebParser parser) {
         this.maxDepth = maxDepth;
         this.executorService = Executors.newFixedThreadPool(threadPoolSize);
         this.parser = parser;
+        this.rateLimiter = new SimpleRateLimiter(1000);
     }
 
     public CompletableFuture<Void> crawl(String startUrl) {
@@ -26,6 +28,8 @@ public class SampleFutureWebCrawler {
         if (depth > maxDepth || !visitedUrls.add(url)) {
             return CompletableFuture.completedFuture(null); 
         }
+
+        rateLimiter.acquire(); // rate limiter;
 
         System.out.println("Crawling: " + url + " at depth " + depth);
 
