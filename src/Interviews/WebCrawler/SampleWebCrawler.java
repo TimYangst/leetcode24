@@ -22,7 +22,6 @@ public class SampleWebCrawler {
         List<Future<?>> futures = new CopyOnWriteArrayList<>();
         futures.add(executorService.submit(() -> crawl(startUrl, 0, futures)));
 
-        // 等待所有任务完成
         for (Future<?> future : futures) {
             try {
                 future.get();
@@ -31,7 +30,6 @@ public class SampleWebCrawler {
             }
         }
 
-        // 关闭线程池
         executorService.shutdown();
     }
 
@@ -42,7 +40,7 @@ public class SampleWebCrawler {
 
         System.out.println("Crawling: " + url + " at depth " + depth);
 
-        List<String> links = parser.parse(url);  // 解析URL并获取其中的链接
+        List<String> links = parser.parse(url); 
 
         for (String link : links) {
             futures.add(executorService.submit(() -> crawl(link, depth + 1, futures)));
@@ -50,9 +48,9 @@ public class SampleWebCrawler {
     }
 
     public static void main(String[] args) {
-        WebParser parser = new SimpleWebParser();  // 需要实现WebParser接口
+        WebParser parser = new SimpleWebParser(); 
         SampleWebCrawler crawler = new SampleWebCrawler(3, 10, parser);
-        crawler.crawl("http://example.com");  // 起始URL
+        crawler.crawl("http://example.com");  
     }
 }
 
@@ -60,8 +58,7 @@ public class SampleWebCrawler {
 class SimpleWebParser implements WebParser {
     @Override
     public List<String> parse(String url) {
-        // 假设这个方法会解析网页并返回其中的链接列表
-        return List.of("http://example.com/link1", "http://example.com/link2"); // 示例
+        return List.of("http://example.com/link1", "http://example.com/link2"); 
     }
 }
 
