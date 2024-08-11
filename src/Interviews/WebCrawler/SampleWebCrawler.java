@@ -1,6 +1,5 @@
 package Interviews.WebCrawler;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.*;
@@ -35,12 +34,12 @@ public class SampleWebCrawler {
 
     private void crawl(String url, int depth, List<Future<?>> futures) {
         if (depth > maxDepth || !visitedUrls.add(url)) {
-            return; 
+            return;
         }
 
         System.out.println("Crawling: " + url + " at depth " + depth);
 
-        List<String> links = parser.parse(url); 
+        List<String> links = parser.parse(url);
 
         for (String link : links) {
             futures.add(executorService.submit(() -> crawl(link, depth + 1, futures)));
@@ -48,10 +47,8 @@ public class SampleWebCrawler {
     }
 
     public static void main(String[] args) {
-        WebParser parser = new SimpleWebParser(); 
+        WebParser parser = new SimpleWebParser();
         SampleWebCrawler crawler = new SampleWebCrawler(3, 10, parser);
-        crawler.crawl("http://example.com");  
+        crawler.crawl("http://example.com");
     }
 }
-
-

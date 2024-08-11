@@ -1,7 +1,5 @@
 package Interviews.WebCrawler;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.*;
 
@@ -11,7 +9,7 @@ public class SampleFutureWebCrawler {
     private final Set<String> visitedUrls = ConcurrentHashMap.newKeySet();
     private final int maxDepth;
     private final WebParser parser;
-    private final SimpleRateLimiter rateLimiter; 
+    private final SimpleRateLimiter rateLimiter;
 
     public SampleFutureWebCrawler(int maxDepth, int threadPoolSize, WebParser parser) {
         this.maxDepth = maxDepth;
@@ -26,7 +24,7 @@ public class SampleFutureWebCrawler {
 
     private CompletableFuture<Void> crawl(String url, int depth) {
         if (depth > maxDepth || !visitedUrls.add(url)) {
-            return CompletableFuture.completedFuture(null); 
+            return CompletableFuture.completedFuture(null);
         }
 
         rateLimiter.acquire(); // rate limiter;
@@ -44,11 +42,10 @@ public class SampleFutureWebCrawler {
     }
 
     public static void main(String[] args) {
-        WebParser parser = new SimpleWebParser();  
+        WebParser parser = new SimpleWebParser();
         SampleFutureWebCrawler crawler = new SampleFutureWebCrawler(3, 10, parser);
 
         CompletableFuture<Void> future = crawler.crawl("http://example.com");
-
 
         future.join();
         crawler.executorService.shutdown();
