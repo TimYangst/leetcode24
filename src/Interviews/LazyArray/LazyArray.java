@@ -4,54 +4,41 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class LazyArray {
-
     private List<Integer> elements;
-    private List<Function<List<Integer>, List<Integer>>> operations;
 
-    public LazyArray(int[] array) {
+    private List<Function<Integer, Integer>> ops;
 
-        this.elements = new ArrayList<>(Arrays.stream(array).boxed().collect(Collectors.toList()));
-        this.operations = new ArrayList<>();
+    public LazyArray(int[] numbers) {
+        this.elements = Arrays.stream(numbers).boxed().collect(Collectors.toList());
+        this.ops = new ArrayList<>();
     }
 
-    public List<Integer> toList() {
-        return evaluate();
-    }
-
-    public LazyArray map(Function<Integer, Integer> mapOp) {
-        operations.add(list -> list.stream().map(mapOp).collect(Collectors.toList()));
-        return this;
-    }
-
-    public LazyArray filter(Predicate<Integer> predOp) {
-        operations.add(list -> list.stream().filter(predOp).collect(Collectors.toList()));
+    public LazyArray map(Function<Integer, Integer> op) {
+        ops.add(op);
         return this;
     }
 
     public List<Integer> evaluate() {
-        List<Integer> result = elements;
-        for (Function<List<Integer>, List<Integer>> op : operations) {
-            result = op.apply(result);
-        }
-        return result;
+        return this.elements.stream().map(element -> {
+            int result = element;
+            for (Function<Integer, Integer> op : ops) {
+                result = op.apply(result);
+            }
+            return result;
+        }).collect(Collectors.toList());
     }
 
-    public int indexOf(Integer value) {
-        List<Integer> evaluated = evaluate();
-        return evaluated.indexOf(value);
+    public int indexOf(int value) {
+        return this.evaluate().indexOf(value);
     }
 
     public static void main(String[] args) {
-        LazyArray array = new LazyArray(new int[] { 1, 2, 3 });
-        System.out.println(array.map(a -> a * 3).indexOf(3));
+        LazyArray array = new LazyArray(new int[] { 10, 20, 30, 40, 50 });
+        System.out.println("array.map(x -> x*2).indexOf(40) == " + array.map(x -> x * 2).indexOf(40));
 
-        for (int i : array.toList()) {
-            System.out.println(i);
-        }
     }
 
 }
