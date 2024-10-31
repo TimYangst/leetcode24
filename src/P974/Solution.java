@@ -1,8 +1,5 @@
 package P974;
 
-import java.util.HashMap;
-import java.util.Map;
-
 class Solution {
 
     int getPositiveMod(int n, int k) {
@@ -13,18 +10,15 @@ class Solution {
     }
 
     public int subarraysDivByK(int[] nums, int k) {
-        Map<Integer, Integer> count = new HashMap<>();
+        int[] count = new int[k];
+        count[0] = 1;
         int result = 0;
-        int offset = 0;
+        int prefix = 0;
         for (int i = 0; i < nums.length; i++) {
-            int m = getPositiveMod(nums[i], k);
-            if (m == 0)
-                result++;
-            int index = getPositiveMod(k - m - offset, k);
-            result += count.getOrDefault(index, 0);
-            System.out.println(index + " : " + result);
-            offset += m;
-            count.compute(getPositiveMod(m - offset, k), (key, value) -> (value == null ? 1 : value + 1));
+            prefix += nums[i];
+            int index = getPositiveMod(prefix, k);
+            result += count[index];
+            count[index]++;
         }
         return result;
     }
