@@ -11,7 +11,6 @@ class Solution:
                     f[j][j+i] = f[j+1][j+i-1]
                 else:
                     f[j][j+i] = min(f[j][j+i-1], f[j+1][j+i]) + 1
-        print(f[0])
         return f[0][l-1] <= k
 
 
