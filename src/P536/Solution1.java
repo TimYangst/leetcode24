@@ -4,7 +4,7 @@ package P536;
  * Definition for a binary tree node.
  */
 
-public class TreeNode {
+class TreeNode {
     int val;
     TreeNode left;
     TreeNode right;
@@ -33,7 +33,7 @@ class ReturnResult {
     }
 }
 
-class Solution {
+class Solution1 {
     private ReturnResult buildTree(String s, int index) {
         int i = index;
         while (i < s.length() &&
