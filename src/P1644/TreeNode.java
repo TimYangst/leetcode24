@@ -17,32 +17,26 @@ public class TreeNode {
 }
 
 class Solution {
-    boolean find(TreeNode root, TreeNode target, Deque<TreeNode> stack) {
+    int count = 0;
+
+    TreeNode find(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null)
-            return false;
-        stack.addLast(root);
-        if (root == target)
-            return true;
-        if (find(root.left, target, stack))
-            return true;
-        if (find(root.right, target, stack))
-            return true;
-        stack.pollLast();
-        return false;
+            return null;
+        TreeNode l = find(root.left, p, q);
+        TreeNode r = find(root.right, p, q);
+        if (root == p || root == q) {
+            count++;
+            return root;
+        }
+        if (l != null && r != null)
+            return root;
+        return l != null ? l : r;
     }
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        Deque<TreeNode> pStack = new LinkedList<>();
-        Deque<TreeNode> qStack = new LinkedList<>();
-        if (!find(root, p, pStack))
+        TreeNode result = find(root, p, q);
+        if (count < 2)
             return null;
-        if (!find(root, q, qStack))
-            return null;
-        TreeNode result = root;
-        while (!pStack.isEmpty() && !qStack.isEmpty() && pStack.peekFirst() == qStack.peekFirst()) {
-            result = pStack.pollFirst();
-            qStack.pollFirst();
-        }
         return result;
     }
 }
