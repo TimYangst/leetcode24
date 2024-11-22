@@ -14,44 +14,19 @@ class TreeNode {
 }
 
 class Solution {
-    class Found {
-        boolean findP = false;
-        boolean findQ = false;
-        TreeNode result;
-
-        boolean allFound() {
-            return findP && findQ;
-        }
-    }
-
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    TreeNode findAny(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null)
             return root;
         if (root == p || root == q)
             return root;
-        Found found = searchNodes(root, p, q);
-        return found.result;
+        TreeNode l = findAny(root.left, p, q);
+        TreeNode r = findAny(root.right, p, q);
+        if (l != null && r != null)
+            return root;
+        return l != null ? l : r;
     }
 
-    Found searchNodes(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null)
-            return new Found();
-        Found lResult = searchNodes(root.left, p, q);
-        if (lResult.allFound())
-            return lResult;
-        Found rResult = searchNodes(root.right, p, q);
-        if (rResult.allFound())
-            return rResult;
-        Found result = new Found();
-        if (root == p) {
-            result.findP = true;
-        } else if (root == q) {
-            result.findQ = true;
-        }
-        result.findP = result.findP || lResult.findP || rResult.findP;
-        result.findQ = result.findQ || lResult.findQ || rResult.findQ;
-        result.result = root;
-
-        return result;
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        return findAny(root, p, q);
     }
 }
