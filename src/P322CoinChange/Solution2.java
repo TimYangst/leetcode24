@@ -2,7 +2,7 @@ package P322CoinChange;
 
 import java.util.Arrays;
 
-class Solution {
+class Solution2 {
 
     private int search(int amount, int[] coins, int[] f) {
         if (amount < 0)
