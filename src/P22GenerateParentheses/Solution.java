@@ -1,34 +1,33 @@
 package P22GenerateParentheses;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 class Solution {
     public List<String> generateParenthesis(int n) {
-        List<String> result = new ArrayList<>();
         if (n == 0)
-            return result;
-        Map<Integer, List<String>> patterns = new HashMap<>();
-        patterns.put(0, List.of(""));
-        patterns.put(1, List.of("()"));
-        patterns.put(2, List.of("(())", "()()"));
+            return List.of();
+        if (n == 1)
+            return List.of("()");
+        List<String>[] patterns = (List<String>[]) (new List[n + 1]);
+
+        patterns[0] = List.of("");
+        patterns[1] = List.of("()");
+        patterns[2] = List.of("(())", "()()");
         for (int i = 3; i <= n; i++) {
             List<String> current = new ArrayList<>();
-            for (int j = 1; j <= i; j++) {
-                int k = i - j;
-                List<String> firstHalf = patterns.get(j - 1);
-                List<String> secondHalf = patterns.get(k);
+            for (int j = 0; j < i; j++) {
+                int k = i - j - 1;
+                List<String> firstHalf = patterns[j];
+                List<String> secondHalf = patterns[k];
                 for (String first : firstHalf) {
-                    String half = "(" + first + ")";
                     for (String second : secondHalf) {
-                        current.add(half + second);
+                        current.add(first + '(' + second + ')');
                     }
                 }
             }
-            patterns.put(i, current);
+            patterns[i] = current;
         }
-        return patterns.get(n);
+        return patterns[n];
     }
 }
