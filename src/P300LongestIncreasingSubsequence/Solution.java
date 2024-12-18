@@ -8,24 +8,22 @@ class Solution {
             return nums.length;
         int f[] = new int[nums.length + 1];
         Arrays.fill(f, Integer.MAX_VALUE);
-        int result = 1;
+        int result = 0;
         f[0] = Integer.MIN_VALUE;
-        f[1] = nums[0];
-        for (int i = 1; i < nums.length; i++) {
+        for (int i = 0; i < nums.length; i++) {
             int b = 0;
             int e = result;
-            while (b < e) {
-                int mid = (b + e) / 2;
-                if (f[mid + 1] < nums[i]) {
+            int pos = 0;
+            while (b <= e) {
+                int mid = b + (e - b) / 2;
+                if (f[mid] < nums[i]) {
+                    pos = mid;
                     b = mid + 1;
-                } else {
-                    e = mid;
-                }
+                } else
+                    e = mid - 1;
             }
-            if (b == result) {
-                result = b + 1;
-            }
-            f[b + 1] = Math.min(f[b + 1], nums[i]);
+            f[pos + 1] = Math.min(f[pos + 1], nums[i]);
+            result = Math.max(pos + 1, result);
         }
         return result;
     }
