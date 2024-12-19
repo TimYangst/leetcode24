@@ -4,32 +4,18 @@ class Solution {
     public int uniquePaths(int m, int n) {
         if (m == 0 || n == 0)
             return 1;
-        return calcC(m + n - 2, m - 1);
+        int f[][] = new int[m][n];
+        for (int i = 0; i < m; i++)
+            f[i][0] = 1;
+        for (int j = 0; j < n; j++)
+            f[0][j] = 1;
+        return get(m - 1, n - 1, f);
     }
 
-    int calcC(int n, int k) {
-        if (n - k < k) {
-            k = n - k;
-        }
-        int result = 1;
-        for (int i = 1; i <= k; i++) {
-            if (result % i == 0) {
-                result = (result / i) * (n - k + i);
-            } else if ((n - k + i) % i == 0) {
-                result = result * ((n - k + i) / i);
-            } else {
-                int gcd = gcd(result, i);
-                result = (result / gcd) * ((n - k + i) / (i / gcd));
-            }
-        }
-        return result;
-    }
-
-    int gcd(int a, int b) {
-        if (a < b)
-            return gcd(b, a);
-        if (a % b == 0)
-            return b;
-        return gcd(b, a % b);
+    int get(int m, int n, int[][] f) {
+        if (f[m][n] != 0)
+            return f[m][n];
+        f[m][n] = get(m - 1, n, f) + get(m, n - 1, f);
+        return f[m][n];
     }
 }
