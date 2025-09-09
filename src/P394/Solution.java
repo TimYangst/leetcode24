@@ -1,44 +1,34 @@
 package P394;
 
-class SectionResult {
-    String result;
-    int nextIndex;
-
-    SectionResult(String result, int nextIndex) {
-        this.result = result;
-        this.nextIndex = nextIndex;
-    }
-}
+import java.util.Stack;
 
 class Solution {
+    public String decodeString(String s) {
+        Stack<Integer> countStack = new Stack<>();
+        Stack<StringBuilder> strStack = new Stack<>();
+        StringBuilder current = new StringBuilder();
+        int k = 0;
 
-    private SectionResult decodeSection(String s, int b) {
-        int i = b;
-        StringBuilder sb = new StringBuilder();
-        while (i < s.length() && s.charAt(i) != ']') {
-            if ('a' <= s.charAt(i) && s.charAt(i) <= 'z') {
-                sb.append(s.charAt(i));
-                i++;
+        for (char c : s.toCharArray()) {
+            if (Character.isDigit(c)) {
+                k = k * 10 + (c - '0');
+            } else if (c == '[') {
+                countStack.push(k);
+                strStack.push(current);
+                current = new StringBuilder();
+                k = 0;
+            } else if (c == ']') {
+                int count = countStack.pop();
+                StringBuilder prev = strStack.pop();
+                for (int i = 0; i < count; i++) {
+                    prev.append(current);
+                }
+                current = prev;
             } else {
-                int count = 0;
-                while ('0' <= s.charAt(i) && s.charAt(i) <= '9') {
-                    count = count * 10 + (s.charAt(i) - '0');
-                    i++;
-                }
-                // s[i] = '['
-                SectionResult next = decodeSection(s, i + 1);
-                for (int j = 0; j < count; j++) {
-                    sb.append(next.result);
-                }
-                i = next.nextIndex + 1;
+                current.append(c);
             }
         }
-        return new SectionResult(sb.toString(), i);
-    }
 
-    public String decodeString(String s) {
-        if (s.length() <= 3)
-            return s;
-        return decodeSection(s, 0).result;
+        return current.toString();
     }
 }
