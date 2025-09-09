@@ -1,9 +1,7 @@
 package P2402;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.PriorityQueue;
-import java.util.Queue;
 
 class Solution {
     public int mostBooked(int n, int[][] meetings) {
@@ -12,42 +10,35 @@ class Solution {
                 return a[0] - b[0];
             return a[1] - b[1];
         });
-        PriorityQueue<Long> nextTime = new PriorityQueue<>((a, b) -> a > b ? 1 : -1);
-        for (int i = 0; i < meetings.length; i++) {
-            nextTime.add((long) meetings[i][0]);
-        }
-        PriorityQueue<long[]> ending = new PriorityQueue<>((a, b) -> a[0] > b[0] ? 1 : -1);
+        PriorityQueue<Integer> availableRooms = new PriorityQueue<>();
+        PriorityQueue<long[]> occupiedRooms = new PriorityQueue<>((a, b) -> {
+            if (a[0] != b[0])
+                return Long.compare(a[0], b[0]);
+            return Long.compare(a[1], b[1]);
+        });
         int[] count = new int[n];
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> a - b);
-        Queue<Integer> waiting = new LinkedList<>();
 
         for (int i = 0; i < n; i++) {
-            pq.add(i);
+            availableRooms.add(i);
         }
-        int index = 0;
-        while (!nextTime.isEmpty() && (index < meetings.length || !waiting.isEmpty())) {
-            long start = nextTime.poll();
-            while (!ending.isEmpty() && ending.peek()[0] <= start) {
-                long[] ended = ending.poll();
-                pq.add((int) ended[1]);
+        for (int i = 0; i < meetings.length; i++) {
+            int current = meetings[i][0];
+            while (!occupiedRooms.isEmpty() && occupiedRooms.peek()[0] <= current) {
+                long[] ended = occupiedRooms.poll();
+                availableRooms.add((int) ended[1]);
             }
-            while (!waiting.isEmpty() && !pq.isEmpty()) {
-                int picked = pq.poll();
-                int mt = waiting.poll();
+            if (!availableRooms.isEmpty()) {
+                int picked = availableRooms.poll();
+                long[] occupied = new long[2];
+                occupied[0] = meetings[i][1];
+                occupied[1] = picked;
+                occupiedRooms.add(occupied);
                 count[picked]++;
-                ending.add(new long[] { start + (meetings[mt][1] - meetings[mt][0]), picked });
-                nextTime.add(start + (meetings[mt][1] - meetings[mt][0]));
-            }
-            while (index < meetings.length && meetings[index][0] <= start) {
-                if (pq.isEmpty()) {
-                    waiting.add(index);
-                } else {
-                    int picked = pq.poll();
-                    count[picked]++;
-                    ending.add(new long[] { meetings[index][1], picked });
-                    nextTime.add((long) meetings[index][1]);
-                }
-                index++;
+            } else {
+                long[] earliest = occupiedRooms.poll();
+                count[(int) earliest[1]]++;
+                earliest[0] += (long) (meetings[i][1] - meetings[i][0]);
+                occupiedRooms.add(earliest);
             }
         }
         int result = 0;
