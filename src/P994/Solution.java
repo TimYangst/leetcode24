@@ -1,0 +1,43 @@
+package P994;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+class Solution {
+    static int[] DN = { 0, 1, 0, -1, 0 };
+
+    public int orangesRotting(int[][] grid) {
+        Queue<int[]> queue = new LinkedList<>();
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == 2) {
+                    grid[i][j] = -1;
+                    queue.add(new int[] { i, j });
+                }
+            }
+        }
+        int result = 0;
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            int x = current[0];
+            int y = current[1];
+            for (int k = 0; k < 4; k++) {
+                int nx = x + DN[k];
+                int ny = y + DN[k + 1];
+                if (0 <= nx && nx < grid.length && 0 <= ny && ny < grid[0].length
+                        && grid[nx][ny] == 1) {
+                    grid[nx][ny] = grid[x][y] - 1;
+                    result = -grid[nx][ny] - 1;
+                    queue.add(new int[] { nx, ny });
+                }
+            }
+        }
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == 1)
+                    return -1;
+            }
+        }
+        return result;
+    }
+}
